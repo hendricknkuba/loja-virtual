@@ -383,6 +383,11 @@ input:focus{
     color: #ff523b;
     margin-left: 10px;
 }
+
+.small-img-row{
+    display: flex;
+    justify-content: space-between;
+}
 /*-----------Media Query For Menu----------*/
 
 @media only screen and (max-width: 800px){

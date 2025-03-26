@@ -39,23 +39,23 @@
     <div class="small-container single-product">
         <div class="row">
             <div class="col-2">
-                <img src="img/gallery-1.jpg" width="100%"/>
+                <img src="img/gallery-1.jpg" width="100%" id="productImg"/>
 
                 <div class="small-img-row">
                     <div class="small-img-col">
-                        <img src="img/gallery-1.jpg" width="100%"/>
+                        <img src="img/gallery-1.jpg" width="100%" class="small-img"/>
                     </div>
 
                     <div class="small-img-col">
-                        <img src="img/gallery-2.jpg" width="100%"/>
+                        <img src="img/gallery-2.jpg" width="100%" class="small-img"/>
                     </div>
 
                     <div class="small-img-col">
-                        <img src="img/gallery-3.jpg" width="100%"/>
+                        <img src="img/gallery-3.jpg" width="100%" class="small-img"/>
                     </div>
 
                     <div class="small-img-col">
-                        <img src="img/gallery-4.jpg" width="100%"/>
+                        <img src="img/gallery-4.jpg" width="100%" class="small-img"/>
                     </div>
                 </div>
             </div>
@@ -194,6 +194,28 @@
             menuItems.style.maxHeight = "0px";
         }
     }
+
+    //Product gallery
+    var productImg =  document.querySelector('#productImg');
+    var SmallImg = document.getElementsByClassName('small-img');
+
+    SmallImg[0].onclick = function(){
+        productImg.src = SmallImg[0].src;
+    }
+
+    SmallImg[1].onclick = function(){
+        productImg.src = SmallImg[1].src;
+    }
+
+    SmallImg[2].onclick = function(){
+        productImg.src = SmallImg[2].src;
+    }
+
+    SmallImg[3].onclick = function(){
+        productImg.src = SmallImg[3].src;
+    }
+
+
 </script>
 </body>
 </html>

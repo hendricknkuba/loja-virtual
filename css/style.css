@@ -388,6 +388,11 @@ input:focus{
     display: flex;
     justify-content: space-between;
 }
+
+.small-img-col{
+    flex-basis: 24%;
+    cursor: pointer;
+}
 /*-----------Media Query For Menu----------*/
 
 @media only screen and (max-width: 800px){

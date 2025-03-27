@@ -30,6 +30,10 @@ nav ul li{
     margin-right: 20px;
 }
 
+nav ul li a:hover{
+    color: #ff523b;
+    transition: background 0.5s;
+}
 a{
     text-decoration: none;
     color: #555;
@@ -77,7 +81,7 @@ p{
     padding: 8px 30px;
     margin: 30px 0;
     border-radius: 30px;
-    transition: background 0.5s;
+    transition: ease-in 0.5s;
 }
 .btn:hover{
     background: #563434;

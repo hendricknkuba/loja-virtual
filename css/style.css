@@ -437,8 +437,24 @@ td img{
     margin-right: 10px;
 }
 
+.total-price{
+    display: flex;
+    justify-content: flex-end;
+}
 
+.total-price table{
+    border-top: 3px solid #ff523b;
+    width: 100%;
+    max-width: 400px;
+}
 
+td:last-child{
+    text-align: right;
+}
+
+th:last-child{
+    text-align: right;
+}
 /*-----------Media Query For Menu----------*/
 
 @media only screen and (max-width: 800px){
@@ -494,6 +510,10 @@ td img{
 
     .single-product h2{
         padding: 0 10% 0 10%;
+    }
+
+    .cart-info p{
+        display: none;
     }
 }
 

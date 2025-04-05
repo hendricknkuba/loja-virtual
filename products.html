@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>All Products - RedStore</title>
+    <script src="js/script.js"></script>
 </head>
 <body>
     <header class="">
@@ -48,176 +49,24 @@
                     <option>ZAR</option>
                     <option>BZR</option>
                 </select>
+
+                <div id="time-banner">
+                    Local Time: <span id="local-time">--:--:--</span>
+                </div>
             </div>
 
 
             <h3>T-shirts</h3>
 
-            <div class="row">
-                <div class="col-4">
-                    <img src="img/product-1.jpg" alt="">
-                    <h4>Red Puma T-Shirt</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-
-                <div class="col-4">
-                    <img src="img/product-4.jpg" alt="">
-                    <h4>Blue Puma T-Shirt</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-
-                <div class="col-4">
-                    <img src="img/product-6.jpg" alt="">
-                    <h4>Black Puma T-Shirt</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-
-                <div class="col-4">
-                    <img src="img/product-4.jpg" alt="">
-                    <h4>Blue Puma T-Shirt</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-            </div>
+                <div class="row" id="tshirts"></div>
 
             <h3>Shoes</h3>
 
-            <div class="row">
-                <div class="col-4">
-                    <img src="img/product-5.jpg" alt="">
-                    <h4>Nike Grey Shoes </h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-
-                <div class="col-4">
-                    <img src="img/product-10.jpg" alt="">
-                    <h4>Black Shoes</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-
-                <div class="col-4">
-                    <img src="img/product-11.jpg" alt="">
-                    <h4>Adidas Grey Shoes</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-
-                <div class="col-4">
-                    <img src="img/product-2.jpg" alt="">
-                    <h4>Black Adidas Shoes</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-            </div>
+                <div class="row" id="shoes"></div>
 
             <h3>Wristwatch</h3>
 
-            <div class="row">
-                <div class="col-4">
-                    <img src="img/product-8.jpg" alt="">
-                    <h4>Black Fossil</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-
-                <div class="col-4">
-                    <img src="img/product-9.jpg" alt="">
-                    <h4>Grey George Armani</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-
-                <div class="col-4">
-                    <img src="img/product-8.jpg" alt="">
-                    <h4>Black LV</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-
-                <div class="col-4">
-                    <img src="img/product-9.jpg" alt="">
-                    <h4>Grey Patek Philippe</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-            </div>
+                <div class="row" id="wristwatch"></div>
 
             <div class="page-btn">
                 <span>1</span>

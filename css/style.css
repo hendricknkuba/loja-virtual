@@ -459,6 +459,19 @@ td:last-child{
 th:last-child{
     text-align: right;
 }
+
+#time-banner {
+    background-color: #ff523b; /* cinza escuro */
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 18px;
+    font-family: sans-serif;
+    bottom: 0;
+    width: 30%;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
 /*-----------Media Query For Menu----------*/
 
 @media only screen and (max-width: 800px){

@@ -460,6 +460,36 @@ th:last-child{
     text-align: right;
 }
 
+.cart-icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-counter {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    width: 60%;
+    height: 60%;
+    /* display: none; /* Inicialmente escondido */
+}
+
+.cart-counter {
+    /* ... outros estilos ... */
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
 #time-banner {
     background-color: #ff523b; /* cinza escuro */
     color: #fff;

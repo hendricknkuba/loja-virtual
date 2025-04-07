@@ -1,22 +1,40 @@
 let products = [];
+let currentCurrency = 'USD';
+const exchangeRates = {
+    USD: 1.0,    // Base currency
+    EUR: 0.91,   // Example rate (check current rates)
+    AOA: 916.0,
+    CAD: 1.42,
+};
+const currencySymbols = {
+    USD: '$',
+    EUR: '€',
+    CAD: 'C$',
+    AOA: 'Kz',
+};
+//This constant will be used to convert currency to be displayed in carts
+const convertProducts = JSON.parse(localStorage.getItem('Products'));
+const productList = JSON.parse(localStorage.getItem('convertedProducts'));
+const productId = localStorage.getItem('selectedProductId');
+
 
 function initialize()
 {
-
+    //localStorage.clear();
     currentTime();
     setInterval(currentTime, 1000);
-    displayProducts();
+    storeProductsInLocalStorage();
     displaySavedCurrency();
     productsReview();
 
+    //Storing preferred currency in localStorage
     localStorage.setItem('preferredCurrency', currentCurrency);
 
-    // Currency change handler
+    //Currency change handler
     document.getElementById('currency').addEventListener('change', function() {
         setCurrency(this.value);
     });
 }
-
 
 //Constructors
 function Product(id, name, price, img, rating, quantity, stock)
@@ -48,34 +66,44 @@ function Review(id, productId,userName, text, rating, date){
     this.date = date;
 }
 
-//Funções de inicialização
+
+//This function display the current time
 function currentTime()
 {
     const time = new Date();
     document.getElementById("local-time").textContent = time.toLocaleTimeString();
 }
 
+//This function receive a number of stars and render as HTML icons
 function renderStars(rating) {
-    // Ensure rating is a valid number between 0 and 5
+    //Ensuring that rating is a valid number between 0 and 5
     rating = parseFloat(rating);
-    if (isNaN(rating) || rating < 0) rating = 0;
-    if (rating > 5) rating = 5;
+
+    if (isNaN(rating) || rating < 0)
+    {
+        rating = 0;
+    }
+
+    if (rating > 5)
+    {
+        rating = 5;
+    }
 
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
     let html = "";
 
-    // Add full stars
+    //Adding full stars
     for (let i = 0; i < fullStars; i++) {
         html += '<i class="fa fa-star"></i>';
     }
 
-    // Add half star if needed
+    //Adding half star if it is needed
     if (hasHalfStar) {
         html += '<i class="fa fa-star-half-o"></i>';
     }
 
-    // Add empty stars to complete 5 stars
+    //Adding empty stars to complete 5 stars
     const starsAdded = fullStars + (hasHalfStar ? 1 : 0);
     for (let i = starsAdded; i < 5; i++) {
         html += '<i class="fa fa-star-o"></i>';
@@ -84,7 +112,9 @@ function renderStars(rating) {
     return html;
 }
 
+//This function display products in index page
 function renderProducts(productList, containerId, startIndex = 0, itemsToShow = 4) {
+
     const container = document.getElementById(containerId);
     container.innerHTML = ""; 
     
@@ -94,6 +124,7 @@ function renderProducts(productList, containerId, startIndex = 0, itemsToShow = 
         const productDiv = document.createElement("div");
         productDiv.className = "col-4 product";
         productDiv.dataset.id = product.id;
+        
         productDiv.innerHTML = `
           <img src="${product.img}" alt="${product.name}">
           <h4>${product.name}</h4>
@@ -109,7 +140,8 @@ function renderProducts(productList, containerId, startIndex = 0, itemsToShow = 
     });
 }
 
-function displayProducts()
+//This function store the product object in Local Storage to be accessed by any page.
+function storeProductsInLocalStorage()
 {
      products = [
         new Product(1, "Red Puma T-Shirt", 19, "img/product-1.jpg", 4, 0, 10),
@@ -137,38 +169,65 @@ function displayProducts()
 
 function goToProductDetail(productId)
 {
-    // Salva o ID do produto no localStorage (ou localStorage)
-    localStorage.setItem('selectedProductId', productId);
+    productId = parseInt(productId);
 
-    // Redireciona para a página de detalhes
+    //Store product id in localStorage
+    localStorage.setItem('selectedProductId', productId);
+    console.log(JSON.parse(localStorage.getItem('selectedProductId')));
+    //Redirect to the page that shows product details
     window.location.href = 'product-detail.html';
 }
+
+function productDetail()
+{
+    if (productId) {
+        const product = productList.find(p => p.id == productId);
+
+        isDisabled = false;
+
+        if (product) {
+
+            document.getElementById('product-name').textContent = product.name;
+            document.getElementById('productImg').src = product.img;
+            document.getElementById('product-price').textContent = `${currency}${product.price.toFixed(2)}`;
+            document.getElementById('stock').textContent = `Left in Stock: ${product.stock}`;
+
+            const inputDiv = document.getElementById('quantity');
+            inputDiv.innerHTML = '';
+
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.className = 'input-quantity';
+            input.value = 1;
+            input.min = 1;
+            input.max = product.stock;
+            input.style = 'width: 80px;';
+            input.id = 'product-quantity';
+
+            inputDiv.appendChild(input);
+        } else {
+            alert("Product not found!");
+            flag = false;
+        }
+    }
+}
+
 //Currency Exchange
-const exchangeRates = {
-    USD: 1.0,    // Base currency
-    EUR: 0.91,   // Example rate (check current rates)
-    AOA: 916.0,
-    CAD: 1.42,
-};
-
-const currencySymbols = {
-    USD: '$',
-    EUR: '€',
-    CAD: 'C$',
-    AOA: 'Kz',
-};
-
-let currentCurrency = 'USD';
-
 function setCurrency(currency) {
+
     if (exchangeRates[currency]) {
+
         currentCurrency = currency;
+
         localStorage.setItem('preferredCurrency', currency);
+
         updatePrices();
+
         updateAndStoreConvertedProducts(convertProducts);
     }
 }
 
+//This function convert the price based on the current currency rates
 function convertPrice(price) {
     return price * exchangeRates[currentCurrency];
 }
@@ -186,7 +245,6 @@ function updatePrices()
         el.textContent = formatPrice(originalPrice);
     });
 }
-const convertProducts = JSON.parse(localStorage.getItem('Products'));
 
 function updateAndStoreConvertedProducts(products) {
     // 1. Converte o preço de cada produto
@@ -203,9 +261,9 @@ function updateAndStoreConvertedProducts(products) {
 
 function displaySavedCurrency()
 {
-
     // Load saved currency preference
     const savedCurrency = localStorage.getItem('preferredCurrency');
+
     if (savedCurrency) {
         document.getElementById('currency').value = savedCurrency;
         setCurrency(savedCurrency);
@@ -214,6 +272,7 @@ function displaySavedCurrency()
 }
 
 function displayCurrency(preferredCurrency = 'USD'){
+
     let currency = '$';
 
     if (preferredCurrency === 'EUR') {
@@ -227,12 +286,12 @@ function displayCurrency(preferredCurrency = 'USD'){
     return currency;
 }
 
-const productList = JSON.parse(localStorage.getItem('convertedProducts'));
-
 // Add item to cart with quantity validation
 function addToCart(productId, quantity) {
-    const pid = parseInt(productId); // garante tipo número
-    quantity = parseInt(quantity) || 1; // Default 1 se não for número
+
+    const pid = parseInt(productId);
+
+    quantity = parseInt(quantity) || 1;
 
     const product = productList.find(p => p.id === pid);
     if (!product) {
@@ -257,51 +316,59 @@ function addToCart(productId, quantity) {
         }
 
         existingItem.quantity = total;
+
     } else {
+
         if (quantity > maxQuantity) {
-            alert(`You can only add up to of this product.`);
+            alert(`You reached the maximum quantity of this product.`);
             return false;
         }
 
         cartItems.push({
             id: pid,
             name: product.name,
-            price: parseFloat(product.price), // Garante que é número
+            price: parseFloat(product.price),
             img: product.img,
-            stock: parseInt(product.stock) || 10, // Garante que é número
-            quantity: parseInt(quantity) // Garante que é número
+            stock: parseInt(product.stock) || 10,
+            quantity: parseInt(quantity)
         });
     }
 
     localStorage.setItem('cart', JSON.stringify(cartItems));
+
     alert('Product added to cart');
+
     updateCartCounter();
     return true;
 }
 
-// Function to remove or update item quantity in cart
+//This function remove or update item quantity in cart
 function updateCartItemQuantity(productId, newQuantity) {
+
     newQuantity = parseInt(newQuantity);
-    // 1. Get current cart from localStorage
+
+    //Getting current cart from localStorage
     let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // 2. Find the item in cart
+    //Finding the item in cart
     const itemIndex = cartItems.findIndex(item => item.id == productId);
 
-    // 3. If item doesn't exist, return
-    if (itemIndex === -1) return false;
+    //If item doesn't exist, return
+    if (itemIndex === -1){
+        return false;
+    }
 
-    // 4. Handle quantity change
     if (newQuantity <= 0) {
-        // Remove item completely if quantity is 0 or less
+        //Removing item completely if the quantity is 0 or less
         cartItems.splice(itemIndex, 1);
+
     } else {
-        // Update quantity respecting maximum limit
+        //Updating the quantity respecting maximum limit
         const maxQuantity = cartItems[itemIndex].stock || 10;
         cartItems[itemIndex].quantity = Math.min(newQuantity, maxQuantity);
     }
 
-    // 5. Save updated cart
+    //Saving the updated cart
     localStorage.setItem('cart', JSON.stringify(cartItems));
 
     if (document.querySelector('.cart-page')) {
@@ -312,16 +379,20 @@ function updateCartItemQuantity(productId, newQuantity) {
     return true;
 }
 
-// Function to completely remove item from cart
+//This function remove completely item from cart
 function removeFromCart(productId, qty) {
     updateCartItemQuantity(productId, qty - 1); // Setting quantity to 0 removes the item
 }
 
 function updateCartCounter() {
+
     const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
     const counter = document.querySelector('.cart-counter');
 
-    if (!counter) return; // evita erro se o elemento não existir
+    //Break if the element does not exist
+    if (!counter){
+        return;
+    }
 
     if (cartItems.length === 0) {
         counter.classList.add('hidden');
@@ -331,9 +402,10 @@ function updateCartCounter() {
     }
 }
 
+//This function store reviews in localstorage.
 function productsReview()
 {
-    const reviews = [
+     const reviews = [
         new Review(1, 1, "Hendrick Nkuba", "Bad Product. I do not recomend", 1, "09/09/2009"),
         new Review(2, 2, "Hendrick Nkuba", "Bad Product. I do not recomend", 2, "11/09/2004"),
         new Review(3, 3, "Hendrick Nkuba", "Bad Product. I do not recomend", 3, "12/09/2004"),
@@ -347,7 +419,6 @@ function productsReview()
         new Review(5, 11, "Hendrick Nkuba", "It could be Better.", 3, "07/04/2025"),
         new Review(5, 12, "Hendrick Nkuba", "It worth the price. Great Product.", 4, "07/04/2025"),
     ];
-
 
     localStorage.setItem('Reviews', JSON.stringify(reviews));
 }

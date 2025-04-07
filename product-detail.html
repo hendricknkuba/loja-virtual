@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="js/script.js"></script>
     <title>Product Detail - RedStore</title>
 </head>
 <body>
@@ -73,7 +74,7 @@
                         <label for="reviewerName">Your Name:</label>
                         <input type="text" id="reviewerName" required>
                     </div>
-                    <button type="button" class="btn" onclick="addReviews()">Add Review</button>
+                    <button type="button" class="btn"  onclick="addReviews()">Add Review</button>
                 </form>
             </div>
 
@@ -134,8 +135,12 @@
     var menuItems = document.querySelector('#MenuItems');
     menuItems.style.maxHeight = '0px';
 
+    let flag = true;
     let isDisabled = true;
     let  ratingValue;
+    const allProducts = JSON.parse(localStorage.getItem('convertedProducts')) || [];
+    const preferredCurrency = localStorage.getItem('preferredCurrency');
+    const currency = displayCurrency(preferredCurrency);
 
     function menuToggle(){
         if (menuItems.style.maxHeight === "0px"){
@@ -176,43 +181,6 @@
         container.appendChild(productDiv);
     }
 
-    function productDetail()
-    {
-        const productId = localStorage.getItem('selectedProductId');
-        const allProducts = JSON.parse(localStorage.getItem('convertedProducts')) || [];
-        const preferredCurrency = localStorage.getItem('preferredCurrency');
-        const currency = displayCurrency(preferredCurrency);
-
-        if (productId) {
-            const product = allProducts.find(p => p.id == productId);
-
-            isDisabled = false;
-
-            if (product) {
-                // Aqui você popula a página com os dados do produto
-                document.getElementById('product-name').textContent = product.name;
-                document.getElementById('productImg').src = product.img;
-                document.getElementById('product-price').textContent = `${currency}${product.price.toFixed(2)}`;
-                document.getElementById('stock').textContent = `Left in Stock: ${product.stock}`;
-
-                const inputDiv = document.getElementById('quantity');
-                inputDiv.innerHTML = '';
-
-                const input = document.createElement('input');
-                        input.type = 'number';
-                        input.className = 'input-quantity';
-                        input.value = 1;
-                        input.min = 1;
-                        input.max = product.stock;
-                        input.style = 'width: 80px;';
-                        input.id = 'product-quantity';
-
-                inputDiv.appendChild(input);
-            } else {
-                alert("Product not found!");
-            }
-        }
-    }
 
     function addProductToCart()
     {
@@ -224,7 +192,6 @@
 
     function displayReview(reviews)
     {
-        const productId = localStorage.getItem('selectedProductId');
 
         const reviewsList = document.getElementById('reviewsList');
         reviewsList.innerHTML = '';
@@ -236,11 +203,13 @@
             return;
         }
 
-
-        product.forEach(review => {
-            const reviewElement = document.createElement('div');
-            reviewElement.className = 'review';
-            reviewElement.innerHTML = `
+        if (flag === false){
+            document.getElementById('reviewsList').innerHTML = '';
+        } else {
+            product.forEach(review => {
+                const reviewElement = document.createElement('div');
+                reviewElement.className = 'review';
+                reviewElement.innerHTML = `
                 <div class="review-header">
                     <div class="review-top">
                         <span class="reviewer-name">${review.userName}</span>
@@ -250,11 +219,9 @@
                 </div>
                 <div class="review-text">${review.text}</div>
         `;
-            reviewsList.appendChild(reviewElement);
-        });
-
-
-
+                reviewsList.appendChild(reviewElement);
+            });
+        }
     }
 
     function addReviews()
@@ -266,14 +233,14 @@
 
         const formattedDate = `${day}/${month}/${year}`;
 
-        const productId = localStorage.getItem('selectedProductId');
         const productReview = JSON.parse(localStorage.getItem('Reviews'));
         const reviewText = document.getElementById('reviewText').value;
         const reviewerName = document.getElementById('reviewerName').value;
 
         if (reviewText === '' || reviewerName === ''){
             alert('Please provide a review name and review comment');
-
+        } else if (productId){
+            alert('Product not found!');
         } else {
 
             productReview.push({
@@ -281,7 +248,7 @@
                 productId: productId,
                 userName: reviewerName,
                 text: reviewText,
-                rating: rantingvalue,
+                rating: ratingValue,
                 date: formattedDate,
             });
 
@@ -296,9 +263,9 @@
         star.addEventListener('click', function () {
             const value = parseInt(this.getAttribute('data-value'));
 
-            // Atualiza input escondido
+            //Updating hidden rating value input
              ratingValue = document.getElementById('ratingValue').value = value;
-            // Atualiza visual (marca as estrelas)
+            //Update the stars
             const stars = document.querySelectorAll('.star-rating .star');
             stars.forEach(s => {
                 const starValue = parseInt(s.getAttribute('data-value'));
@@ -318,6 +285,5 @@
     });
 
 </script>
-<script src="js/script.js"></script>
 </body>
 </html>

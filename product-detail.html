@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>All Products - RedStore</title>
+    <title>Product Detail - RedStore</title>
 </head>
 <body>
 <header class="">
@@ -18,7 +18,7 @@
 
             <nav>
                 <ul id="MenuItems">
-                    <li><a href="indexx.html">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="index.html">Products</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
@@ -26,9 +26,12 @@
                 </ul>
             </nav>
 
-            <a href="cart.html">
-                <img src="img/cart.png" alt="Cart" width="30px" height="30px">
-            </a>
+            <div class="cart-icon-container">
+                <a href="cart.html">
+                    <img src="img/cart.png" id="cart" alt="Cart" width="30px" height="30px">
+                    <span class="cart-counter" id="cartCounter"></span>
+                </a>
+            </div>
             <img src="img/menu.png" alt="Cart" class="menu-icon" onclick="menuToggle()">
         </div>
 
@@ -38,111 +41,58 @@
 <main>
 
     <!-----Single Product Details----->
-    <div class="small-container single-product">
-        <div class="row">
-            <div class="col-2">
-                <img src="img/gallery-1.jpg" width="100%" id="productImg"/>
+    <div class="small-container single-product" id="single-product">
 
-                <div class="small-img-row">
-                    <div class="small-img-col">
-                        <img src="img/gallery-1.jpg" width="100%" class="small-img"/>
-                    </div>
-
-                    <div class="small-img-col">
-                        <img src="img/gallery-2.jpg" width="100%" class="small-img"/>
-                    </div>
-
-                    <div class="small-img-col">
-                        <img src="img/gallery-3.jpg" width="100%" class="small-img"/>
-                    </div>
-
-                    <div class="small-img-col">
-                        <img src="img/gallery-4.jpg" width="100%" class="small-img"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-2">
-                <p>Home / T-shirt</p>
-                <h1>Red Printed T-shirt by HRX</h1>
-                <h4>$50.00</h4>
-                <select>
-                    <option>Select Size</option>
-                    <option>XXL</option>
-                    <option>XL</option>
-                    <option>L</option>
-                    <option>M</option>
-                    <option>S</option>
-                </select>
-                <input type="number" value="1"/>
-                <a href="" class="btn">Add To Cart</a>
-                <h3>Description <i class="fa fa-ident"></i></h3>
-                <br>
-                <p>
-                    Give your summer wardrobe a style upgrade with the HRX Men's Active T-shirt. Team it with a pair of shorts for your morning workout or a denims for an evening out with the guys.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-----Title----->
-    <div class="row row-2">
-        <h2>Related Products</h2>
-        <p>View More</p>
     </div>
 
     <div class="small-container">
         <div class="row">
-            <div class="col-4">
-                <img src="img/product-9.jpg" alt="">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
+
+        </div>
+    </div>
+
+    <div class="small-container">
+        <div class="product-container">
+            <!-- Detalhes do produto -->
+            <div class="product-info">
+                <h1 id="product-name">Nome do Produto</h1>
+                <div class="product-rating">
+                    <div class="average-rating">★★★★★</div>
+                    <span class="rating-count">(0 avaliações)</span>
                 </div>
-                <p>$50.00</p>
+                <!-- Outros detalhes do produto -->
             </div>
 
-            <div class="col-4">
-                <img src="img/product-10.jpg" alt="">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
+            <!-- Formulário de avaliação -->
+            <div class="review-form">
+                <h3>Deixe sua avaliação</h3>
+                <form id="reviewForm">
+                    <div class="star-rating">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                        <input type="hidden" id="ratingValue" name="rating" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewText">Seu comentário:</label>
+                        <textarea id="reviewText" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewerName">Seu nome:</label>
+                        <input type="text" id="reviewerName" required>
+                    </div>
+                    <button type="submit">Enviar Avaliação</button>
+                </form>
             </div>
 
-            <div class="col-4">
-                <img src="img/product-11.jpg" alt="">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
+            <!-- Lista de avaliações -->
+            <div class="reviews-section">
+                <h3>Avaliações dos Clientes</h3>
+                <div id="reviewsList" class="reviews-list">
+                    <!-- As avaliações serão inseridas aqui via JavaScript -->
                 </div>
-                <p>$50.00</p>
-            </div>
-
-            <div class="col-4">
-                <img src="img/product-12.jpg" alt="">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$50.00</p>
             </div>
         </div>
     </div>
@@ -195,6 +145,8 @@
     console.log(menuItems);
     menuItems.style.maxHeight = '0px';
 
+    let isDisabled = true;
+
     function menuToggle(){
         if (menuItems.style.maxHeight === "0px"){
             menuItems.style.maxHeight = "200px";
@@ -203,27 +155,91 @@
         }
     }
 
-    //Product gallery
-    var productImg =  document.querySelector('#productImg');
-    var SmallImg = document.getElementsByClassName('small-img');
+    function displayProductDetail()
+    {
+        let container = document.getElementById('single-product');
+        const productDiv = document.createElement('div');
 
-    SmallImg[0].onclick = function(){
-        productImg.src = SmallImg[0].src;
+        productDiv.className = 'row';
+
+        productDiv.innerHTML = `
+            <div class="col-2">
+                <img src="img/404.jpg" width="100%" id="productImg" alt=""/>
+            </div>
+
+            <div class="col-2">
+                <p>Home / Product Detail</p>
+                <h1 id="product-name">Nothing to show</h1>
+                <h4 id="product-price">$0.00</h4>
+                <label for="quantity">Quantity:</label>
+                <div id="quantity"></div>
+                <button class="btn" onclick="addProductToCart()">Add To Cart</button>
+                <p id="stock">Left in Stock: </p>
+                <h3>Description <i class="fa fa-ident"></i></h3>
+                <br>
+                <p>
+                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam metus turpis, commodo at sapien sit amet, gravida fermentum ex. Duis sollicitudin eros orci, gravida viverra nibh posuere in. Curabitur nec leo massa.
+                </p>
+            </div>
+        `;
+
+        container.appendChild(productDiv);
     }
 
-    SmallImg[1].onclick = function(){
-        productImg.src = SmallImg[1].src;
+    function productDetail()
+    {
+        const productId = localStorage.getItem('selectedProductId');
+        const allProducts = JSON.parse(localStorage.getItem('convertedProducts')) || [];
+        const preferredCurrency = localStorage.getItem('preferredCurrency');
+        const currency = displayCurrency(preferredCurrency);
+
+        if (productId) {
+            const product = allProducts.find(p => p.id == productId);
+            console.log(product);
+            isDisabled = false;
+            console.log(
+                isDisabled
+            )
+            if (product) {
+                // Aqui você popula a página com os dados do produto
+                document.getElementById('product-name').textContent = product.name;
+                document.getElementById('productImg').src = product.img;
+                document.getElementById('product-price').textContent = `${currency}${product.price.toFixed(2)}`;
+                document.getElementById('stock').textContent = `Left in Stock: ${product.stock}`;
+
+                const inputDiv = document.getElementById('quantity');
+                inputDiv.innerHTML = '';
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.className = 'input-quantity';
+                input.value = 1;
+                input.min = 1;
+                input.max = product.stock;
+                input.style = 'width: 80px;';
+                input.id = 'product-quantity';
+                // ... e por aí vai
+
+                inputDiv.appendChild(input);
+            } else {
+                alert("Product not found!");
+            }
+        }
     }
 
-    SmallImg[2].onclick = function(){
-        productImg.src = SmallImg[2].src;
+    function addProductToCart()
+    {
+        let quantity = document.getElementById('product-quantity').value;
+        const productId = localStorage.getItem('selectedProductId');
+        console.log(quantity);
+        addToCart(productId, quantity);
     }
 
-    SmallImg[3].onclick = function(){
-        productImg.src = SmallImg[3].src;
-    }
-
-
+    window.addEventListener('DOMContentLoaded', function() {
+        displayProductDetail();
+        productDetail();
+    });
 </script>
+<script src="js/script.js"></script>
+<script src="js/reviews.js"></script>
 </body>
 </html>

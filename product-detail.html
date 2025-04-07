@@ -53,19 +53,9 @@
 
     <div class="small-container">
         <div class="product-container">
-            <!-- Detalhes do produto -->
-            <div class="product-info">
-                <h1 id="product-name">Nome do Produto</h1>
-                <div class="product-rating">
-                    <div class="average-rating">★★★★★</div>
-                    <span class="rating-count">(0 avaliações)</span>
-                </div>
-                <!-- Outros detalhes do produto -->
-            </div>
-
-            <!-- Formulário de avaliação -->
+            <!-- Review Form -->
             <div class="review-form">
-                <h3>Deixe sua avaliação</h3>
+                <h3>Give Your Review</h3>
                 <form id="reviewForm">
                     <div class="star-rating">
                         <span class="star" data-value="1">★</span>
@@ -76,22 +66,22 @@
                         <input type="hidden" id="ratingValue" name="rating" value="0">
                     </div>
                     <div class="form-group">
-                        <label for="reviewText">Seu comentário:</label>
+                        <label for="reviewText">Your Comment:</label>
                         <textarea id="reviewText" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="reviewerName">Seu nome:</label>
+                        <label for="reviewerName">Your Name:</label>
                         <input type="text" id="reviewerName" required>
                     </div>
-                    <button type="submit">Enviar Avaliação</button>
+                    <button type="button" class="btn" onclick="addReviews()">Add Review</button>
                 </form>
             </div>
 
             <!-- Lista de avaliações -->
             <div class="reviews-section">
-                <h3>Avaliações dos Clientes</h3>
+                <h3>Clients Reviews</h3>
                 <div id="reviewsList" class="reviews-list">
-                    <!-- As avaliações serão inseridas aqui via JavaScript -->
+
                 </div>
             </div>
         </div>
@@ -142,10 +132,10 @@
 <script>
     //Toggle menu
     var menuItems = document.querySelector('#MenuItems');
-    console.log(menuItems);
     menuItems.style.maxHeight = '0px';
 
     let isDisabled = true;
+    let  ratingValue;
 
     function menuToggle(){
         if (menuItems.style.maxHeight === "0px"){
@@ -195,11 +185,9 @@
 
         if (productId) {
             const product = allProducts.find(p => p.id == productId);
-            console.log(product);
+
             isDisabled = false;
-            console.log(
-                isDisabled
-            )
+
             if (product) {
                 // Aqui você popula a página com os dados do produto
                 document.getElementById('product-name').textContent = product.name;
@@ -209,15 +197,15 @@
 
                 const inputDiv = document.getElementById('quantity');
                 inputDiv.innerHTML = '';
+
                 const input = document.createElement('input');
-                input.type = 'number';
-                input.className = 'input-quantity';
-                input.value = 1;
-                input.min = 1;
-                input.max = product.stock;
-                input.style = 'width: 80px;';
-                input.id = 'product-quantity';
-                // ... e por aí vai
+                        input.type = 'number';
+                        input.className = 'input-quantity';
+                        input.value = 1;
+                        input.min = 1;
+                        input.max = product.stock;
+                        input.style = 'width: 80px;';
+                        input.id = 'product-quantity';
 
                 inputDiv.appendChild(input);
             } else {
@@ -234,12 +222,102 @@
         addToCart(productId, quantity);
     }
 
+    function displayReview(reviews)
+    {
+        const productId = localStorage.getItem('selectedProductId');
+
+        const reviewsList = document.getElementById('reviewsList');
+        reviewsList.innerHTML = '';
+
+        const product = reviews.filter(p => p.productId == productId);
+
+        if (!product || product.length === 0) {
+            reviewsList.innerHTML = '<p>Not reviewed. Be the first!</p>';
+            return;
+        }
+
+
+        product.forEach(review => {
+            const reviewElement = document.createElement('div');
+            reviewElement.className = 'review';
+            reviewElement.innerHTML = `
+                <div class="review-header">
+                    <div class="review-top">
+                        <span class="reviewer-name">${review.userName}</span>
+                        <span class="review-date">${review.date}</span>
+                    </div>
+                    <div class="review-rating">${renderStars(review.rating)}</div>
+                </div>
+                <div class="review-text">${review.text}</div>
+        `;
+            reviewsList.appendChild(reviewElement);
+        });
+
+
+
+    }
+
+    function addReviews()
+    {
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2, '0');      // day with 2 digits
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // month with 2 digits
+        const year = today.getFullYear();
+
+        const formattedDate = `${day}/${month}/${year}`;
+
+        const productId = localStorage.getItem('selectedProductId');
+        const productReview = JSON.parse(localStorage.getItem('Reviews'));
+        const reviewText = document.getElementById('reviewText').value;
+        const reviewerName = document.getElementById('reviewerName').value;
+
+        if (reviewText === '' || reviewerName === ''){
+            alert('Please provide a review name and review comment');
+
+        } else {
+
+            productReview.push({
+                id: 6,
+                productId: productId,
+                userName: reviewerName,
+                text: reviewText,
+                rating: rantingvalue,
+                date: formattedDate,
+            });
+
+            localStorage.setItem('Reviews', JSON.stringify(productReview));
+
+            displayReview(JSON.parse(localStorage.getItem('Reviews')));
+        }
+
+    }
+
+    document.querySelectorAll('.star-rating .star').forEach(star => {
+        star.addEventListener('click', function () {
+            const value = parseInt(this.getAttribute('data-value'));
+
+            // Atualiza input escondido
+             ratingValue = document.getElementById('ratingValue').value = value;
+            // Atualiza visual (marca as estrelas)
+            const stars = document.querySelectorAll('.star-rating .star');
+            stars.forEach(s => {
+                const starValue = parseInt(s.getAttribute('data-value'));
+                if (starValue <= value) {
+                    s.classList.add('selected');
+                } else {
+                    s.classList.remove('selected');
+                }
+            });
+        });
+    });
+
     window.addEventListener('DOMContentLoaded', function() {
         displayProductDetail();
         productDetail();
+        displayReview(JSON.parse(localStorage.getItem('Reviews')));
     });
+
 </script>
 <script src="js/script.js"></script>
-<script src="js/reviews.js"></script>
 </body>
 </html>

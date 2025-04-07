@@ -616,13 +616,20 @@ th:last-child{
     border-bottom: 1px solid #eee;
 }
 
+.review-top {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+
 .review-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 10px;
     flex-wrap: wrap;
 }
-
 .reviewer-name {
     font-weight: bold;
 }
@@ -639,6 +646,7 @@ th:last-child{
 
 .review-text {
     line-height: 1.5;
+    margin-top: 5px;
 }
 
 .average-rating {
@@ -650,6 +658,16 @@ th:last-child{
 .rating-count {
     color: #777;
     margin-left: 5px;
+}
+
+.star-rating {
+    font-size: 2rem;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.star-rating .star.selected {
+    color: gold;
 }
 
 /*-----------Media Query For Menu----------*/

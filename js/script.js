@@ -1,14 +1,15 @@
 let products = [];
-const counter = document.querySelector('.cart-counter');
 
 function initialize()
 {
-    //localStorage.clear();
-    localStorage.setItem('preferredCurrency', currentCurrency);
+
     currentTime();
     setInterval(currentTime, 1000);
     displayProducts();
     displaySavedCurrency();
+    productsReview();
+
+    localStorage.setItem('preferredCurrency', currentCurrency);
 
     // Currency change handler
     document.getElementById('currency').addEventListener('change', function() {
@@ -38,10 +39,13 @@ function CartItem(id, name, price, quantity, img)
     this.img = img;
 }
 
-function Review(productId, text, rating){
+function Review(id, productId,userName, text, rating, date){
+    this.id = id;
     this.productId = productId;
     this.text = text;
     this.rating = rating;
+    this.userName = userName;
+    this.date = date;
 }
 
 //Funções de inicialização
@@ -326,4 +330,24 @@ function updateCartCounter() {
         counter.classList.remove('hidden');
     }
 }
-window.addEventListener('DOMContentLoaded', initialize);
+
+function productsReview()
+{
+    const reviews = [
+        new Review(1, 1, "Hendrick Nkuba", "Bad Product. I do not recomend", 1, "09/09/2009"),
+        new Review(2, 2, "Hendrick Nkuba", "Bad Product. I do not recomend", 2, "11/09/2004"),
+        new Review(3, 3, "Hendrick Nkuba", "Bad Product. I do not recomend", 3, "12/09/2004"),
+        new Review(4, 4, "Hendrick Nkuba", "It could be Better.", 4, "07/04/2025"),
+        new Review(5, 5, "Hendrick Nkuba", "It worth the price. Great Product.", 5, "07/04/2025"),
+        new Review(5, 6, "Hendrick Nkuba", "It could be Better.", 4, "07/04/2025"),
+        new Review(5, 7, "Hendrick Nkuba", "Bad Product. I do not recomend", 3, "07/04/2025"),
+        new Review(5, 8, "Hendrick Nkuba", "Bad Product. I do not recomend", 2, "07/04/2025"),
+        new Review(5, 9, "Hendrick Nkuba", "Bad Product. I do not recomend", 1, "07/04/2025"),
+        new Review(5, 10, "Hendrick Nkuba", "Bad Product. I do not recomend", 2, "07/04/2025"),
+        new Review(5, 11, "Hendrick Nkuba", "It could be Better.", 3, "07/04/2025"),
+        new Review(5, 12, "Hendrick Nkuba", "It worth the price. Great Product.", 4, "07/04/2025"),
+    ];
+
+
+    localStorage.setItem('Reviews', JSON.stringify(reviews));
+}

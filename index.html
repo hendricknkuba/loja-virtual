@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="js/script.js"></script>
     <title>All Products - RedStore</title>
 </head>
 <body>
@@ -18,7 +19,7 @@
 
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="#">Home</a></li>
+                        <li><a href="index.html">Home</a></li>
                         <li><a href="index.html" style="color: #ff523b">Products</a></li>
                         <li><a href="#">About</a></li>
                         <li><a href="#">Contact</a></li>
@@ -126,7 +127,6 @@
     <script>
         //Open and Close menu
         var menuItems = document.querySelector('#MenuItems');
-        console.log(menuItems);
         menuItems.style.maxHeight = '0px';
 
         function menuToggle(){
@@ -137,7 +137,7 @@
             }
         }
 
+        window.addEventListener('DOMContentLoaded', initialize);
     </script>
-    <script src="js/script.js"></script>
 </body>
 </html>

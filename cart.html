@@ -18,7 +18,7 @@
 
             <nav>
                 <ul id="MenuItems">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="index.html">Products</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
@@ -48,23 +48,6 @@
         </table>
 
         <div class="total-price">
-
-            <table>
-                <tr>
-                    <td>Subtotal</td>
-                    <td>$200.00</td>
-                </tr>
-
-                <tr>
-                    <td>Tax</td>
-                    <td>$200.00</td>
-                </tr>
-
-                <tr>
-                    <td>Total</td>
-                    <td>$200.00</td>
-                </tr>
-            </table>
 
         </div>
 
@@ -119,6 +102,8 @@
     console.log(menuItems);
     menuItems.style.maxHeight = '0px';
 
+    let cartItems = [];
+
     function menuToggle(){
         if (menuItems.style.maxHeight === "0px"){
             menuItems.style.maxHeight = "200px";
@@ -127,13 +112,21 @@
         }
     }
 
+    function CartItem(id, name, price, quantity, img)
+    {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.img = img;
+    }
+
+    let cart = JSON.parse(localStorage.getItem("cart"));
+
     function displayCartItems(cartItems) {
-        // Exemplo de uso:
-        cartItems = [
-            { id: 1, name: "Red Printed T-shirt", price: 50.00, quantity: 2, img: "img/buy-1.jpg" },
-            { id: 2, name: "Black Jeans", price: 75.00, quantity: 1, img: "img/buy-2.jpg" },
-            { id: 3, name: "White Sneakers", price: 120.00, quantity: 1, img: "img/buy-3.jpg" }
-        ];
+        const preferredCurrency = localStorage.getItem('preferredCurrency');
+        let currency = displayCurrency(preferredCurrency);
+        let totalPriceTable;
 
         const tbody = document.querySelector('.cart-page table'); // Usa o table diretamente se não tiver tbody
 
@@ -152,32 +145,67 @@
             row.innerHTML = `
             <td>
                 <div class="cart-info">
-                    <img src="${item.img || 'img/default-product.jpg'}" alt="${item.name}">
+                    <img src="${item.img}" alt="${item.name}">
                     <div>
                         <p>${item.name}</p>
-                        <small>Price: $${item.price.toFixed(2)}</small>
+                        <small>Price: ${currency}${item.price.toFixed(2)}</small>
                         <br>
-                        <a href="#" class="remove-item" data-id="${item.id}">Remove</a>
+                        <button class="remove-item" data-id="${item.id}" onclick="removeFromCart(${item.id}, ${item.quantity})">Remove</button>
                     </div>
                 </div>
             </td>
-            <td><input type="number" value="${item.quantity}" min="1" class="item-quantity" data-id="${item.id}"></td>
-            <td>$${itemSubtotal.toFixed(2)}</td>
+            <td><p>${item.quantity}</td>
+            <td>${currency}${itemSubtotal.toFixed(2)}</td>
         `;
             tbody.appendChild(row);
         });
 
-        // Atualiza os totais
-        const tax = subtotal * 0.1; // 10% de taxa (ajuste conforme necessário)
-        const total = subtotal + tax;
+        // Cálculos financeiros
+        const taxRate = 0.10; // 10% de taxa
+        const tax = subtotal * taxRate;
 
-        document.querySelector('.total-price tr:nth-child(1) td:last-child').textContent = `$${subtotal.toFixed(2)}`;
-        document.querySelector('.total-price tr:nth-child(2) td:last-child').textContent = `$${tax.toFixed(2)}`;
-        document.querySelector('.total-price tr:nth-child(3) td:last-child').textContent = `$${total.toFixed(2)}`;
+        // Cálculo do frete (exemplo: $5.99 fixo ou 5% do subtotal)
+        const shippingCost = subtotal > 100 ? 0 : 5.99; // Frete grátis para compras acima de $100
+        // Alternativa: const shippingCost = subtotal * 0.05; // 5% do subtotal
+
+        const grandTotal = subtotal + tax + shippingCost;
+
+        // Atualiza a tabela de totais
+        if (cartItems.length === 0) {
+             totalPriceTable = `<p class="empty-cart-message">Your Cart is Empty.</p>`;
+        }else{
+             totalPriceTable = `
+        <table>
+            <tr>
+                <td>Subtotal</td>
+                <td>${currency}${subtotal.toFixed(2)}</td>
+            </tr>
+            <tr>
+                <td>Tax (${taxRate * 100}%)</td>
+                <td>${currency}${tax.toFixed(2)}</td>
+            </tr>
+            <tr>
+                <td>Shipping Cost</td>
+                <td>${currency}${shippingCost.toFixed(2)}</td>
+            </tr>
+            <tr>
+                <td><strong>Grand Total</strong></td>
+                <td><strong>${currency}${grandTotal.toFixed(2)}</strong></td>
+            </tr>
+        </table>
+    `;
+
+        }
+        // Insere a tabela atualizada
+        const totalPriceDiv = document.querySelector('.total-price');
+        if (totalPriceDiv) {
+            totalPriceDiv.innerHTML = totalPriceTable;
+        }
     }
 
-    window.addEventListener('DOMContentLoaded', displayCartItems);
-
+    window.addEventListener('DOMContentLoaded', () => {
+        displayCartItems(cart);
+    })
 </script>
 <script src="js/script.js"></script>
 </body>

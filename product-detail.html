@@ -236,9 +236,10 @@
         const reviewText = document.getElementById('reviewText').value;
         const reviewerName = document.getElementById('reviewerName').value;
 
+
         if (reviewText === '' || reviewerName === ''){
             alert('Please provide a review name and review comment');
-        } else if (productId){
+        } else if (productId === null || productId === undefined){
             alert('Product not found!');
         } else {
 

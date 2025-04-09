@@ -303,7 +303,9 @@ small{
 ul{
     list-style-type: none;
 }
-
+.logo strong{
+    color: #ff523b;
+}
 .app-logo{
     margin-top: 20px;
 }

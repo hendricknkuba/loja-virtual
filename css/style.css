@@ -306,6 +306,13 @@ ul{
 .logo strong{
     color: #ff523b;
 }
+
+.logo-footer{
+    color: #ff523b;
+}
+.footer-col-2 h1{
+    color: #ffffff;
+}
 .app-logo{
     margin-top: 20px;
 }
